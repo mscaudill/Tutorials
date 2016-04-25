@@ -77,7 +77,7 @@ git branch -d branch_name "deletes a branch"
 git clone remote_location clone_name "replicates a remote repository at
                                       remote location and names it 
                                       clone_name. It also gives the 
-                                      remote_loc the name origin"
+                                      remote_loc the name origin."
 git remote -v "list a git projects remotes"
 
 git fetch "fetches changes made to remote and brings those changes to a
