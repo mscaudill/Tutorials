@@ -66,3 +66,36 @@ CASE WHEN continent = 'Oceania' THEN 'Australasia'
      ELSE continent END
 FROM world
 ORDER BY name
+
+# BBC Quiz
+
+#1. Find the names of the countries that begin with the letter U
+SELECT name FROM world
+WHERE name like 'U%'
+
+#2. Find the table with just the population of the UK
+SELECT population FROM world
+WHERE name='United Kingdom'
+
+#3. Identify the problem with the following sql code
+SELECT continent FROM world
+WHERE 'name' = 'France'
+# 'name' is a column of the table and should be referenced like name nt
+# 'name'
+
+#4. What does the following code yield
+SELECT name, population / 10 FROM world
+WHERE population < 10000
+# Table 4
+
+#5. Find the name and populations of countries in Europe and Asia
+SELECT name, population FROM world
+WHERE continent IN ('Europe', 'Asia')
+
+#6. Select the code that would yield two row table
+SELECT name FROM world
+WHERE name IN ('Cuba', 'Togo')
+
+#7. Which table does this code yield
+SELECT name FROM world
+WHERE continent = 'South America' AND population > 40000000
