@@ -64,4 +64,40 @@ SELECT winner, subject FROM nobel
 WHERE yr = 1984
 ORDER BY subject IN ('Physics', 'Chemsitry'), subject, winner
 
+# Nobel Quiz #
+##############
 
+#1. Find the winners names that begin with C and end with n
+SELECT winner FROM nobel
+WHERE winner LIKE 'C%' AND winner LIKE '%n'
+
+#2. How many chemistry awards were given between 1950 and 1960
+SELECT COUNT(subject) FROM nobel
+WHERE subject = 'Chemistry' AND yr BETWEEN 1950 AND 1960
+
+#3. Find the amount of years where no medicine awards were given
+SELECT COUNT(DISTINCT yr) FROM nobel
+WHERE yr NOT IN (SELECT DISTINCT yr FROM nobel WHERE subject = 'Medicine')
+
+#4.
+SELECT subject, winner FROM nobel WHERE winner LIKE 'Sir%' AND yr LIKE
+'196%'
+# This would give Table 3
+
+#5. Show the year in which neither a Physics or Chemistry award was given
+SELECT yr FROM nobel
+WHERE yr NOT IN (SELECT yr FROM nobel WHERE subject IN
+('Chemistry','Physics'))
+
+#6. Find years when medicine award was given but no peace or lit award was
+SELECT DISTINCT yr FROM nobel
+WHERE subject='Medicine' AND yr NOT IN (SELECT yr FROM nobel
+                                        WHERE subject='Literature')
+                         AND yr NOT IN (SELECT yr FROM nobel
+                                        WHERE subject='Peace')
+
+#7. Pick the table
+SELECT subject, COUNT(subject) FROM nobel
+WHERE yr='1960'
+GROUP BY subject
+# Gives table 4
