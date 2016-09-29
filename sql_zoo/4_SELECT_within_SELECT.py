@@ -60,3 +60,45 @@ WHERE population >= 3*ALL(SELECT population FROM world y WHERE
                           y.continent=x.continent AND
                           x.name!=y.name)
 
+# Nested Select Quiz #
+######################
+# bbc(name, region, area, population, gdp)
+
+#1.  Show name region and population of the smallest country in each region
+SELECT name, region, population FROM bbc x
+WHERE population <= ALL(SELCECT population FROM bbc y WHERE y.region =
+        x.region AND population > 0)
+
+#2. Show the countries belonging to regions with all pops > 50,000
+SELECT name, region, population FROM bbx x
+WHERE 50e3 < ALL(SELECT population FROM bbc y where y.region = x.region AND
+        y.population >0)
+
+#3. Find the countries with less than 1/3 the population of the countries
+# around it
+SELECT name, region FROM bbc x
+WHERE population < ALL(SELECT population/3 FROM BBC y WHERE
+        x.region=y.region AND y.name != x.name)
+
+#4. Select the result from the following code
+SELECT name FROM bbc
+WHERE population > (SELECT population FROM bbc WHERE name = 'UK')
+AND region IN (SELECT region FROM bbc WHERE name = 'UK')
+# Should be table D
+
+#5. Show the countries with a greater GDP tan any countru in africa
+SELECT name FROM bbc
+WHERE gdp > ALL(SELECT MAX(gdp) FROM bbc WHERE region='Africa')
+
+#6. Find the countries with populations smaller than Russia but bigger than
+# Denmark
+SELECT name FROM bbc
+WHERE population < (SELECT population FROM bbc WHERE name = 'Russia')
+AND population > (SELECT population FROM bbc WHERE name = 'Denmark')
+
+#7. Find the result of the following code
+SELECT name FROM bbc
+WHERE population > ALL(SELECT MAX(population) FROM bbc WHERE
+        region='Europe') AND region = 'South Asia'
+# Table B
+
