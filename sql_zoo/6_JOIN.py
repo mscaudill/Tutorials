@@ -72,3 +72,47 @@ SELECT mdate, team1,
 FROM game LEFT JOIN goal ON matchid=id
 GROUP BY mdate, team1, team2
 ORDER BY mdate, matchid, team1, team2
+
+# Join Quiz #
+#############
+
+#1. Find the stadium where 'Dimitris Salpingdis' scored
+SELECT stadium FROM game JOIN goal ON game.id = goal.matchid
+WHERE player = 'Dimitris Salpingdis'
+
+#2. What col names may be used in goal JOIN eteam
+matchid, teamid, player, gtime, id, teamname, coach
+
+#3. Find the players, team, and the amt of goals scored against Greece
+SELECT player, teamid, COUNT(*) AS goals 
+FROM goal JOIN game ON matchid = id
+WHERE 'GRE' IN (team1, team2) AND teamid !='GRE'
+GROUP BY player, teamid
+
+#4. Find the result of the following code
+SELECT DISTINCT teamid, mdate
+FROM goal JOIN game ON (matchid = id)
+WHERE mdate = '9 June 2012'
+# Table 1
+
+#5. Show the player and their team for those who have scored against POL in
+# National Stadium, Warsaw
+SELECT DISTINCT player, teamid
+FROM game JOIN goal ON(matchid = id)
+WHERE 'POL' IN (team1, team2) 
+AND teamid != 'POL' 
+AND stadium = 'National Stadium, Warsaw' 
+
+#6. Find the player, their team and the time they scored who have played in
+# Stadion Miejski but not against ITA
+SELECT DISTINCT player, teamid, gtime
+FROM game JOIN goal ON (matchid = id)
+WHERE stadium = 'Stadion Miejski (Wroclaw)'
+AND ((teamid=team2 AND team1 !='ITA') OR (teamid=team1 AND team2 !='ITA'))
+
+#7. Select the result of the following code
+SELECT teamname, COUNT(*)
+FROM eteam JOIN goal on teamid=id
+GROUP BY teamname
+HAVING COUNT(*) < 3
+
